@@ -50,3 +50,7 @@ Options:
 ```
 ### Thanks
 A big thanks to [Aly Akhtar](https://github.com/alyakhtar) for Katastrophe and the motivation to learn Python.
+
+### License
+
+MIT © [Kevin Grant](https://github.com/wedwabbit/katcrawl/blob/master/LICENSE.html)
