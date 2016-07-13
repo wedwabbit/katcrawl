@@ -1,7 +1,21 @@
 # katcrawl
 A command line interface to Kickass Torrents.
 
-A major rework of katastrophe (https://github.com/alyakhtar/Katastrophe)
+A major rework of [Katastrophe](https://github.com/alyakhtar/Katastrophe).
+
+### Dependencies
+
+* [BeautifulSoup4](https://pypi.python.org/pypi/beautifulsoup4)
+* [tabulate](https://pypi.python.org/pypi/tabulate)
+* [docopt](https://github.com/docopt/docopt)
+* [requests](https://pypi.python.org/pypi/requests)
+
+### Requires
+* Python 3
+* Linux/Mac
+  - A torrent client that can handle magnet links.
+* Windows
+  - One of [BitTorrent](http://www.bittorrent.com)/[μTorrent](http://utorrent.com)/[Deluge](http://deluge-torrent.org)/[qBittorrent](http://www.qbittorrent.org)
 
 ### Usage:
 ```sh
@@ -34,3 +48,5 @@ Options:
   -B, --books              Search by Book category
   -X, --xxx                Search by XXX category
 ```
+### Thanks
+A big thanks to [Aly Akhtar](https://github.com/alyakhtar) for Katastrophe and the motivation to learn Python.
