@@ -41,7 +41,6 @@ from sys import platform
 import subprocess
 import os
 from docopt import docopt
-from sys import platform
 
 
 def download_torrent(link, name):
