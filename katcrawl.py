@@ -38,8 +38,6 @@ from bs4 import BeautifulSoup
 from tabulate import tabulate
 from docopt import docopt
 from sys import platform
-from kickass import api
-from kickass import CATEGORY, FIELD, ORDER
 import requests
 import subprocess
 import os
@@ -219,15 +217,6 @@ def main():
 
     media_type = '' # Set a default empty category.
    
-    # Generate api object with available domain.
-    kat = api(check_kats())
-
-    kat_search = kat.search('tarzan')
-    for torrent in kat_search.page(1):
-        print(torrent[link])
-
-    exit()
-
     if args["--movies"] or args['--topmovies']:
         media_type='movies'
     elif args["--tv"] or args["--toptv"]:
