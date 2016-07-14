@@ -48,6 +48,11 @@ Options:
   -B, --books              Search by Book category
   -X, --xxx                Search by XXX category
 ```
+### Todo
+* See if there is a way to check if Bittorrent client is installed on Windows (ie: doesn't have to be running).
+* Add the ability to specify other categories.
+* Migrate to [Reuben-Thorpe's](https://github.com/Reuben-Thorpe) API.
+
 ### Thanks
 A big thanks to [Aly Akhtar](https://github.com/alyakhtar) for Katastrophe and the motivation to learn Python.
 
