@@ -34,14 +34,15 @@ Options:
 """
 
 
-import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
+from docopt import docopt
 from sys import platform
+from kickass import api
+from kickass import CATEGORY, FIELD, ORDER
+import requests
 import subprocess
 import os
-from docopt import docopt
-
 
 def download_torrent(link, name):
 
@@ -62,32 +63,21 @@ def download_torrent(link, name):
 	            os.system('open '+magnet_link)
 
     elif platform == "win32":
-        procs = []
-        flag = 0
-        client = ''
-        cmd = 'WMIC PROCESS get Caption'
-        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        for line in proc.stdout:
-            procs.append(line.strip())
+        supported = ['BitTorrent.exe',
+                     'uTorrent.exe',
+                     'deluge.exe',
+                     'qbittorrent.exe']
 
-        clients = ['BitTorrent.exe',
-                   'uTorrent.exe',
-                   'deluge.exe',
-                   'qbittorrent.exe']
-
-        for c in clients:
-            if c in procs:
-                client = c
+        for proc in psutil.process_iter():
+            if proc.name() in supported:
+                cmd = 'wmic process where "name=\'{}\'" get ExecutablePath'.format(proc.name())
+                p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+                loc = p.stdout.readlines()
+                exe = loc[1].strip()
+                subprocess.Popen([exe.decode(), magnet_link])
                 break
-
-        if client:
-            cmd = 'wmic process where "name=\'{}\'" get ExecutablePath'.format(client)
-            proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-            loc = proc.stdout.readlines()
-            exe = loc[1].strip()
-            subprocess.Popen([exe.decode(), magnet_link])
         else:
-            print("Compatible torrent client not installed or running.")
+            print('Supported BitTorrent client not installed and running!')
             return
         
     print('Downloaded: '+name); # Let the user know which torrent was downloaded.
@@ -225,9 +215,18 @@ def list_torrents(media_type, query=None):
 
 
 def main():
-    args = docopt(__doc__, version='katcrawl 1.0')
+    args = docopt(__doc__, version='katcrawl 1.1')
 
     media_type = '' # Set a default empty category.
+   
+    # Generate api object with available domain.
+    kat = api(check_kats())
+
+    kat_search = kat.search('tarzan')
+    for torrent in kat_search.page(1):
+        print(torrent[link])
+
+    exit()
 
     if args["--movies"] or args['--topmovies']:
         media_type='movies'
