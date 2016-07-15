@@ -62,20 +62,21 @@ def download_torrent(link, name):
 	            os.system('open '+magnet_link)
 
     elif platform == "win32":
+        # Set up a list of supported Bittorrent clients.
         supported = ['BitTorrent.exe',
                      'uTorrent.exe',
                      'deluge.exe',
                      'qbittorrent.exe']
 
-        for proc in psutil.process_iter():
-            if proc.name() in supported:
+        for proc in psutil.process_iter(): # List of currently running processes.
+            if proc.name() in supported: # Match on the first supported client.
                 cmd = 'wmic process where "name=\'{}\'" get ExecutablePath'.format(proc.name())
                 p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
                 loc = p.stdout.readlines()
                 exe = loc[1].strip()
                 subprocess.Popen([exe.decode(), magnet_link])
-                break
-        else:
+                break # Since we found a supported client break out of the loop.
+        else: # No supported clients found.
             print('Supported BitTorrent client not installed and running!')
             return
         
@@ -174,8 +175,8 @@ def list_torrents(media_type, query=None):
     while page > 0:
         count, torrent_list, torrent_hrefs = fetch_list(media_type, page, link, query) # Get the list of torrents.
         # Print the list.
-        print('\nTop '+media_type.upper()+' torrents - Page '+str(page)+'\n')
-        print(tabulate(torrent_list, headers, tablefmt='psql', numalign="center"))
+        print(' '.join(('\nTop '+media_type.upper()+' torrents - Page '+str(page)+'\n').split())) # Print a heading replacing doubles spaces with single.
+        print(tabulate(torrent_list, headers, tablefmt='psql', numalign="right"))
       
         if page > 1:
             req_torrents = input('Enter torrent numbers to download, "e" to exit, "n" for next page, or "p" for previous page: ')
