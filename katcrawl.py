@@ -41,6 +41,7 @@ from sys import platform
 import requests
 import subprocess
 import os
+import psutil
 
 def download_torrent(link, name):
 
