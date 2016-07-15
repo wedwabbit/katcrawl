@@ -19,14 +19,18 @@ A major rework of [Katastrophe](https://github.com/alyakhtar/Katastrophe).
 
 ### Usage:
 ```sh
+katcrawl provides a command line interface to Kickass Torrents.
+
+Usage:
   katcrawl <search>
-  katcrawl ( -m | -t | -a | -s | -l | -g | -p | -b | -x )
-  katcrawl ( -M | -T | -A | -S | -L | -G | -P | -B | -X ) <search>
+  katcrawl ( -m | -t | -a | -s | -l | -g | -p | -b | -x | -z <category> )
+  katcrawl ( -M | -T | -A | -S | -L | -G | -P | -B | -X | -Z <category> ) <search>
   katcrawl -h | --help
   katcrawl --version  
 
 Options:
   <search>                 Search string
+  <category>               User supplied category
   -h, --help               Display this screen.
   --version                Display version.
   -m, --topmovies          List top Movie torrents
@@ -38,6 +42,7 @@ Options:
   -p, --topapplications    List top Application torrents
   -b, --topbooks           List top Book torrents
   -x, --topxxx             List top XXX torrents
+  -z, --topzzz             List top user supplied category
   -M, --movies             Search by Movie category
   -T, --tv                 Search by TV category
   -A, --anime              Search by Anime category
@@ -47,10 +52,11 @@ Options:
   -P, --applications       Search by Applications category
   -B, --books              Search by Book category
   -X, --xxx                Search by XXX category
+  -Z, --zzz                Search by user supplied category
 ```
 ### Todo
 * See if there is a way to check if Bittorrent client is installed on Windows (ie: doesn't have to be running).
-* Add the ability to specify other categories.
+* ~~Add the ability to specify other categories.~~
 * Migrate to [Reuben-Thorpe's](https://github.com/Reuben-Thorpe) API.
 
 ### Thanks
