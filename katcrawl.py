@@ -40,11 +40,12 @@ Options:
 from bs4 import BeautifulSoup
 from tabulate import tabulate
 from docopt import docopt
-from sys import platform
 import requests
+import psutil
+
+from sys import platform
 import subprocess
 import os
-import psutil
 
 def download_torrent(link, name):
 
@@ -61,7 +62,7 @@ def download_torrent(link, name):
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
 
-    elif platform == "darwin":
+    elif platform == "darwin": # No xdg-open support on OSX yet.
 	            os.system('open '+magnet_link)
 
     elif platform == "win32":
@@ -241,7 +242,7 @@ def main():
     elif args["--xxx"] or args["--topxxx"]:
         media_type='xxx'
     elif args["--zzz"] or args["--topzzz"]:
-        media_type=args["<category>"].lower()
+        media_type=args["<category>"].lower() # User entered category.
     
     list_torrents(media_type, args['<search>'])
 
