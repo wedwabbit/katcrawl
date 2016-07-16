@@ -9,6 +9,7 @@ A major rework of [Katastrophe](https://github.com/alyakhtar/Katastrophe).
 * [tabulate](https://pypi.python.org/pypi/tabulate)
 * [docopt](https://github.com/docopt/docopt)
 * [requests](https://pypi.python.org/pypi/requests)
+* [psutil](https://pypi.python.org/pypi/psutil/4.3.0)
 
 ### Requires
 * Python 3
