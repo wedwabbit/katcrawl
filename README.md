@@ -65,8 +65,3 @@ A big thanks to [Aly Akhtar](https://github.com/alyakhtar) for Katastrophe and t
 ### License
 
 MIT © [Kevin Grant](https://github.com/wedwabbit/katcrawl/blob/master/LICENSE.html)
-
-### Installing
-
-Ubuntu:
-Run `pip3 install docopt` and `pip3 install tabulate`
