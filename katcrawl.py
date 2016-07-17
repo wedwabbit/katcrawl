@@ -63,26 +63,10 @@ def download_torrent(link, name):
                          stderr=subprocess.PIPE)
 
     elif platform == "darwin": # No xdg-open support on OSX yet.
-	            os.system('open '+magnet_link)
+	os.system('open '+magnet_link)
 
     elif platform == "win32":
-        # Set up a list of supported Bittorrent clients.
-        supported = ['BitTorrent.exe',
-                     'uTorrent.exe',
-                     'deluge.exe',
-                     'qbittorrent.exe']
-
-        for proc in psutil.process_iter(): # List of currently running processes.
-            if proc.name() in supported: # Match on the first supported client.
-                cmd = 'wmic process where "name=\'{}\'" get ExecutablePath'.format(proc.name())
-                p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-                loc = p.stdout.readlines()
-                exe = loc[1].strip()
-                subprocess.Popen([exe.decode(), magnet_link])
-                break # Since we found a supported client break out of the loop.
-        else: # No supported clients found.
-            print('Supported BitTorrent client not installed and running!')
-            return
+        os.system('start '+magnet_link)
         
     print('Downloaded: '+name); # Let the user know which torrent was downloaded.
 
