@@ -67,12 +67,12 @@ def download_torrent(link, name):
 
     elif platform == "win32":
         # Set up a list of supported Bittorrent clients.
-        supported = ['BitTorrent.exe',
-                     'uTorrent.exe',
-                     'deluge.exe',
-                     'qbittorrent.exe']
+        supported = set(['BitTorrent.exe',
+                         'uTorrent.exe',
+                         'deluge.exe',
+                         'qbittorrent.exe'])
 
-        for proc in psutil.process_iter(): # List of currently running processes.
+        for proc in (set(psutil.process_iter()) & supported): # List of currently running processes.
             if proc.name() in supported: # Match on the first supported client.
                 cmd = 'wmic process where "name=\'{}\'" get ExecutablePath'.format(proc.name())
                 p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
