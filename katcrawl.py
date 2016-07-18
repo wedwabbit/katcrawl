@@ -195,7 +195,7 @@ def list_torrents(media_type, query=None):
 
 
 def main():
-    args = docopt(__doc__, version='katcrawl 1.1')
+    args = docopt(__doc__, version='katcrawl 1.2')
 
     media_type = '' # Set a default empty category.
    
