@@ -56,7 +56,7 @@ Options:
   -Z, --zzz                Search by user supplied category
 ```
 ### Todo
-* See if there is a way to check if Bittorrent client is installed on Windows (ie: doesn't have to be running).
+* ~~See if there is a way to check if Bittorrent client is installed on Windows (ie: doesn't have to be running).~~
 * ~~Add the ability to specify other categories.~~
 * Migrate to [Reuben-Thorpe's](https://github.com/Reuben-Thorpe) API.
 * Add ability to sort results (probably after migration to API).
