@@ -43,46 +43,27 @@ from docopt import docopt
 import requests
 import psutil
 
-from sys import platform
+import sys
 import subprocess
 import os
 
+def soupify_source(link):
+    page_source = requests.get(link, timeout=1.0) # Get page source.
+    return BeautifulSoup(page_source.text.encode('utf-8'), "lxml") # UTF-8 encode it and pass to BS.
+
 def download_torrent(link, name):
 
-    file_name = "".join(name.split()) # Remove whitespace from name to serve as filename.
-    source_code = requests.get(link)
-    plain_text = source_code.text.encode('utf-8')
-    soup = BeautifulSoup(plain_text, "lxml")
+    soup = soupify_source(link)
 
     magnet = soup.find('a', {'title': 'Magnet link'}) # Extract the magnet link.
     magnet_link = magnet.get('href')
 
-    if platform == "linux" or platform == "linux2":
-        subprocess.Popen(['xdg-open', magnet_link],
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE)
-
-    elif platform == "darwin": # No xdg-open support on OSX yet.
-	            os.system('open '+magnet_link)
-
-    elif platform == "win32":
-        # Set up a list of supported Bittorrent clients.
-        supported = ['BitTorrent.exe',
-                     'uTorrent.exe',
-                     'deluge.exe',
-                     'qbittorrent.exe']
-
-        for proc in psutil.process_iter(): # List of currently running processes.
-            if proc.name() in supported: # Match on the first supported client.
-                cmd = 'wmic process where "name=\'{}\'" get ExecutablePath'.format(proc.name())
-                p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-                loc = p.stdout.readlines()
-                exe = loc[1].strip()
-                subprocess.Popen([exe.decode(), magnet_link])
-                break # Since we found a supported client break out of the loop.
-        else: # No supported clients found.
-            print('Supported BitTorrent client not installed and running!')
-            return
+    # Open the magnet link useing default torrent client.
+    if sys.platform == "win32": # subprocess.call not supported on Win32.
+        os.startfile(magnet_link)
+    else:
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, magnet_link])
         
     print('Downloaded: '+name); # Let the user know which torrent was downloaded.
 
@@ -90,17 +71,14 @@ def download_torrent(link, name):
 def check_kats():
     # Check kastatus.com an available mirror.
     kastatus='https://kastatus.com'
-
-    kastatus_source = requests.get(kastatus)
-    plain_text = kastatus_source.text.encode('utf-8')
-    soup = BeautifulSoup(plain_text, "lxml")
+    soup = soupify_source(kastatus)
     
     print('Finding an available mirror...') 
     for i in soup.findAll('a', {'class': 'domainLink'}): # Loop through mirrors checking availability. Return first available.
         url = i.get('href')
         print('Testing '+url+'...')
         try:
-            r = requests.get(url)
+            r = requests.get(url, timeout=1.0) # Set a timeout of 1 second for the mirror.
             if r.status_code == requests.codes.ok:
                 print('Success!')
                 return url+'/'
@@ -138,9 +116,7 @@ def fetch_list(media_type, page, link, query=None): # Fetch page number <page> o
     if page > 1:
         link += '/'+str(page)
 
-    source_code = requests.get(link)
-    plain_text = source_code.text.encode('utf-8')
-    soup = BeautifulSoup(plain_text, "lxml")
+    soup = soupify_source(link)
 
     for i in soup.findAll('table', {'class': 'data'}):
         for j in i('a', {'class': 'cellMainLink'}):
