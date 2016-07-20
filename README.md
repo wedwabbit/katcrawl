@@ -55,8 +55,11 @@ Options:
 
 ### Todo
 * ~~See if there is a way to check if Bittorrent client is installed on Windows (ie: doesn't have to be running).~~
+  * Now opens the torrent magnet link with the default handler on Windows.
 * ~~Add the ability to specify other categories.~~
+  * Done (version 2.0).
 * ~~Migrate to [Reuben-Thorpe's](https://github.com/Reuben-Thorpe) API.~~
+  * Done (version 2.0).
 * Add ability to sort results ~~(probably after migration to API)~~.
 * Show a more human readable torrent date. Maybe age?
 
