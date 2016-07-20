@@ -176,7 +176,8 @@ def list_torrents(media_type, query):
             print('|{0: ^5}|{1: <65}|{2: >9}|{3: ^21}|{4: >10}|{5: >10}|'
                   .format(count, torrent["title"][:60],
                           pretty_size(torrent["size"]),
-                          timeago.format(torrent_date, now),
+                          timeago.format(
+                              torrent_date.replace(tzinfo=None), now),
                           torrent["seeds"],
                           torrent["leechs"]))
             torrent_hrefs.append(torrent["link"])
