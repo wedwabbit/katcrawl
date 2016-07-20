@@ -228,7 +228,7 @@ def list_torrents(media_type, query):
 
 
 def main():
-    args = docopt(__doc__, version='katcrawl 2.0')
+    args = docopt(__doc__, version='katcrawl 2.1')
 
     media_type = None  # Default media type is all (no setting).
 
