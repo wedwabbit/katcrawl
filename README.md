@@ -10,6 +10,7 @@ A major rework of [Katastrophe](https://github.com/alyakhtar/Katastrophe).
 * [requests](https://pypi.python.org/pypi/requests)
 * [psutil](https://pypi.python.org/pypi/psutil/4.3.0)
 * [kickass](https://github.com/Reuben-Thorpe/kickass)
+* [timeago](https://github.com/hustcc/timeago)
 
 ### Requires
 * Python 3
@@ -61,7 +62,8 @@ Options:
 * ~~Migrate to [Reuben-Thorpe's](https://github.com/Reuben-Thorpe) API.~~
   * Done (version 2.0).
 * Add ability to sort results ~~(probably after migration to API)~~.
-* Show a more human readable torrent date. Maybe age?
+* ~~Show a more human readable torrent date. Maybe age?~~
+  * Done (version 2.1) using timeago. 
 
 ### Thanks
 A big thanks to [Aly Akhtar](https://github.com/alyakhtar) for Katastrophe and the motivation to learn Python.
