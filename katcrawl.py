@@ -164,8 +164,8 @@ def list_torrents(media_type, query):
                         + media_type.upper()
                         + ' torrents - Page '
                         + str(page)).split()))
-        print('|{0: ^5}|{1: <65}|{2: >9}|{3: ^21}|{4: >10}|{5: >10}|'
-              .format('No.', 'Name', 'Size', 'Date', 'Seeds', 'Leechers'))
+        print('|{0: ^5}|{1: <65}|{2: >9}|{3: >21}|{4: >10}|{5: >10}|'
+              .format('No.', 'Name', 'Size', 'Age', 'Seeds', 'Leechers'))
         print('|{0:-<125}|'.format('-'))
 
         count = 0
@@ -173,7 +173,7 @@ def list_torrents(media_type, query):
             torrent_date = datetime.strptime(torrent["pubDate"],
                                              '%A %d %b %Y %H:%M:%S %z')
             now = datetime.now()
-            print('|{0: ^5}|{1: <65}|{2: >9}|{3: ^21}|{4: >10}|{5: >10}|'
+            print('|{0: ^5}|{1: <65}|{2: >9}|{3: >21}|{4: >10}|{5: >10}|'
                   .format(count, torrent["title"][:60],
                           pretty_size(torrent["size"]),
                           timeago.format(
