@@ -38,7 +38,7 @@ from bs4 import BeautifulSoup
 from docopt import docopt
 import requests
 import psutil
-from datetime import datetime
+import timeago
 
 from kickass import api
 from kickass import CATEGORY, FIELD, ORDER
@@ -47,6 +47,7 @@ import sys
 import subprocess
 import os
 from math import log
+from datetime import datetime
 
 
 def pretty_size(n, pow=0, b=1024, u='B', pre=[''] + [p for p in'KMGTPEZY']):
@@ -163,25 +164,27 @@ def list_torrents(media_type, query):
                         + media_type.upper()
                         + ' torrents - Page '
                         + str(page)).split()))
-        print('|{0: ^5}|{1: <65}|{2: >9}|{3: ^21}|{4: >10}|{5: >10}|'
-              .format('No.', 'Name', 'Size', 'Date', 'Seeds', 'Leechers'))
-        print('|{0:-<125}|'.format('-'))
+        print('|{0: ^5}|{1: <65}|{2: >9}|{3: >15}|{4: >10}|{5: >10}|'
+              .format('No.', 'Name', 'Size', 'Age', 'Seeds', 'Leechers'))
+        print('|{0:-<119}|'.format('-'))
 
         count = 0
         for torrent in torrent_search.page(page):
             torrent_date = datetime.strptime(torrent["pubDate"],
                                              '%A %d %b %Y %H:%M:%S %z')
-            print('|{0: ^5}|{1: <65}|{2: >9}|{3: ^21}|{4: >10}|{5: >10}|'
+            now = datetime.now()
+            print('|{0: ^5}|{1: <65}|{2: >9}|{3: >15}|{4: >10}|{5: >10}|'
                   .format(count, torrent["title"][:60],
                           pretty_size(torrent["size"]),
-                          torrent_date.strftime('%Y/%m/%d %H:%M:%S'),
+                          timeago.format(
+                              torrent_date.replace(tzinfo=None), now),
                           torrent["seeds"],
                           torrent["leechs"]))
             torrent_hrefs.append(torrent["link"])
             count += 1
 
         # Footer
-        print('|{0:-<125}|'.format('-'))
+        print('|{0:-<119}|'.format('-'))
 
         if page > 1:
             req_torrents = input('Enter torrent numbers to download, '
